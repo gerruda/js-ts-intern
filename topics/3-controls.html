@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Этап 3: Управляющие конструкции</title>
+    <link rel="stylesheet" href="../styles/main.css">
+</head>
+<body>
+<div class="container">
+    <h1>Этап 3: Управляющие конструкции</h1>
+    <a href="../index.html">← Назад к списку тем</a>
+
+    <div class="content">
+        <!-- Блок условий -->
+        <div class="section">
+            <h2>🌦️ Условия: Как одеваемся по погоде</h2>
+
+            <div class="analogy">
+                <div class="weather-case">
+                    <img src="https://cdn-icons-png.flaticon.com/512/869/869869.png" alt="Дождь" width="80">
+                    <pre><code>if (weather === 'дождь') {
+  showPopup('Возьмите зонт! 🌂');
+} else if (weather === 'солнце') {
+  showPopup('Наденьте кепку! 🧢');
+} else {
+  showPopup('Стандартный прогноз');
+}</code></pre>
+                </div>
+            </div>
+
+            <h3>🛒 Реальный пример: Проверка прав пользователя</h3>
+            <pre><code>function canEditProduct(user) {
+  if (user.role === 'admin') return true;
+  if (user.role === 'moderator' && user.isActive) return true;
+  return false;
+}</code></pre>
+        </div>
+
+        <!-- Switch -->
+        <div class="section">
+            <h2>🔀 Switch: Система скидок маркетплейса</h2>
+            <div class="price-examples">
+          <pre><code>switch(userStatus) {
+  case 'vip':
+    discount = 20;
+    break;
+  case 'regular':
+    discount = 10;
+    break;
+  default:
+    discount = 5;
+}</code></pre>
+                <img src="https://cdn-icons-png.flaticon.com/512/2331/2331725.png" alt="Скидки" width="100">
+            </div>
+
+            <div class="pro-tip">
+                <p>⏱️ Когда использовать: При множестве фиксированных вариантов (статусы, категории товаров)</p>
+            </div>
+        </div>
+
+        <!-- Циклы -->
+        <div class="section">
+            <h2>🔄 Циклы: Сбор заказов на складе</h2>
+
+            <div class="loop-types">
+                <div class="loop-card">
+                    <h4>📦 For: Обработка массива заказов</h4>
+                    <pre><code>const orders = [1001, 1002, 1003];
+for (let i = 0; i < orders.length; i++) {
+  processOrder(orders[i]);
+}</code></pre>
+                </div>
+
+                <div class="loop-card">
+                    <h4>⏳ While: Ожидание оплаты</h4>
+                    <pre><code>let isPaymentDone = false;
+while (!isPaymentDone) {
+  checkPaymentStatus(); // Пока не станет true
+}</code></pre>
+                    <p class="warning">⚠️ Всегда обновляйте условие!</p>
+                </div>
+            </div>
+
+            <h3>💥 Типичные ошибки:</h3>
+            <div class="error-case">
+          <pre><code>// Бесконечный цикл!
+let i = 0;
+while (i < 5) {
+  console.log(i);
+  // Забыли i++
+}</code></pre>
+                <p>🔥 Решение: Всегда проверяйте условия выхода</p>
+            </div>
+        </div>
+
+        <!-- Тернарники -->
+        <div class="section">
+            <h2>❓ Тернарный оператор: Быстрые решения</h2>
+
+            <div class="ternary-example">
+                <div class="before-after">
+                    <div>
+                        <h4>Обычный if:</h4>
+                        <pre><code>let access;
+if (age >= 18) {
+  access = 'Разрешено';
+} else {
+  access = 'Запрещено';
+}</code></pre>
+                    </div>
+                    <div class="arrow">→</div>
+                    <div>
+                        <h4>Тернарник:</h4>
+                        <pre><code>const access = age >= 18 ? 'Разрешено' : 'Запрещено';</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <h3>🏷️ Практика: Ценник со скидкой</h3>
+            <pre><code>const priceElement =
+  product.discount > 0
+    ? `<span class="sale">${product.price} ₽</span>`
+    : product.price;</code></pre>
+        </div>
+
+        <!-- Практические задания -->
+        <div class="tasks">
+            <h2>💼 Задачи из жизни разработчика</h2>
+
+            <div class="task">
+                <h4>Задача 1: Фильтрация товаров</h4>
+                <p>Дан массив цен: <code>[1200, 800, 1500, 200]</code>. Вывести только цены выше 1000 ₽</p>
+                <button class="show-solution">Решение</button>
+                <pre class="solution"><code>prices.filter(price => price > 1000).forEach(p => console.log(p));</code></pre>
+            </div>
+
+            <div class="task">
+                <h4>Задача 2: Форматирование статуса заказа</h4>
+                <p>Используя тернарник, преобразуйте статусы:
+                    <br><code>'shipped' → 'Отправлен'</code>, другие → 'В обработке'</p>
+                <button class="show-solution">Решение</button>
+                <pre class="solution"><code>const statusText = status === 'shipped' ? 'Отправлен' : 'В обработке';</code></pre>
+            </div>
+
+            <div class="task">
+                <h4>Задача 3: Поиск VIP-пользователей</h4>
+                <p>В массиве пользователей найдите тех, у кого больше 100 заказов (используйте цикл)</p>
+                <button class="show-solution">Решение</button>
+                <pre class="solution"><code>const vipUsers = [];
+for (const user of users) {
+  if (user.ordersCount > 100) vipUsers.push(user);
+}</code></pre>
+            </div>
+        </div>
+
+        <!-- Чеклист -->
+        <div class="checklist">
+            <h2>✅ Контрольный список</h2>
+            <ul>
+                <li><input type="checkbox"> Знаю разницу между for и while</li>
+                <li><input type="checkbox"> Использую break/continue в циклах</li>
+                <li><input type="checkbox"> Избегаю вложенных тернарников</li>
+                <li><input type="checkbox"> Всегда ставлю break в case</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<script>
+    // Скрипт для показа решений
+    document.querySelectorAll('.show-solution').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const solution = btn.nextElementSibling;
+            solution.style.display = solution.style.display === 'none' ? 'block' : 'none';
+        });
+    });
+</script>
+</body>
+</html>

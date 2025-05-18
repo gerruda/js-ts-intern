@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Этап 7: Введение в TypeScript</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <style>
+        .type-examples {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        .ts-advantage {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Этап 7: Введение в TypeScript</h1>
+    <a href="../index.html">← Назад к списку тем</a>
+
+    <div class="content">
+        <!-- Аналогия -->
+        <div class="analogy-section">
+            <h2>📐 TypeScript — чертёж для вашего кода</h2>
+            <div class="construction-example">
+                <img src="https://cdn-icons-png.flaticon.com/512/2092/2092663.png" alt="Чертёж" width="120">
+                <div class="explanation">
+                    <p>Представьте:</p>
+                    <ul>
+                        <li>JavaScript — свободное строительство</li>
+                        <li>TypeScript — работа по чертежам с проверками</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Преимущества -->
+        <div class="ts-advantage">
+            <h3>🚀 Зачем TypeScript?</h3>
+            <div class="advantage-grid">
+                <div class="advantage-card">
+                    <h4>🛡️ Защита от ошибок</h4>
+                    <p>Находит ошибки до запуска кода</p>
+                    <pre><code>// JavaScript
+let price = "1000";
+price = price * 2; // "2000" 😕
+
+// TypeScript
+let price: number = 1000;
+price = "2000"; // ❌ Ошибка сразу!</code></pre>
+                </div>
+
+                <div class="advantage-card">
+                    <h4>📖 Самодокументирование</h4>
+                    <pre><code>interface Product {
+  id: number;
+  name: string;
+  price: number;
+  inStock: boolean;
+}</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Базовые типы -->
+        <div class="type-section">
+            <h3>🔡 Базовые типы</h3>
+            <div class="type-examples">
+                <div class="type-card">
+                    <h4>1. Примитивы</h4>
+                    <pre><code>let title: string = "Смартфон";
+let price: number = 19990;
+let isAvailable: boolean = true;</code></pre>
+                </div>
+
+                <div class="type-card">
+                    <h4>2. Массивы и объекты</h4>
+                    <pre><code>let colors: string[] = ["red", "blue"];
+let product: {
+  id: number;
+  name: string;
+} = { id: 1, name: "Чехол" };</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Интерфейсы -->
+        <div class="interface-section">
+            <h3>📦 Интерфейсы для данных</h3>
+            <pre><code>interface Order {
+  id: number;
+  items: Array<{
+    productId: number;
+    quantity: number;
+  }>;
+  status: 'pending' | 'shipped' | 'delivered';
+}</code></pre>
+
+            <div class="live-example">
+                <button id="validateOrder">Проверить заказ</button>
+                <div id="orderStatus"></div>
+            </div>
+        </div>
+
+        <!-- Практические задания -->
+        <div class="tasks">
+            <h2>🔧 Практические задания</h2>
+
+            <div class="task">
+                <h4>Задача 1: Типизация товара</h4>
+                <p>Создайте интерфейс <code>Product</code> с полями:</p>
+                <ul>
+                    <li>id (число)</li>
+                    <li>title (строка)</li>
+                    <li>price (число)</li>
+                    <li>isNew (булево, необязательное)</li>
+                </ul>
+                <button class="show-solution">Решение</button>
+                <pre class="solution"><code>interface Product {
+  id: number;
+  title: string;
+  price: number;
+  isNew?: boolean;
+}</code></pre>
+            </div>
+
+            <div class="task">
+                <h4>Задача 2: Исправление ошибок</h4>
+                <pre class="problem-code"><code>function calculateTotal(price: string, quantity: number): number {
+  return price * quantity;
+}</code></pre>
+                <button class="show-solution">Решение</button>
+                <pre class="solution"><code>function calculateTotal(price: number, quantity: number): number {
+  return price * quantity;
+}</code></pre>
+            </div>
+        </div>
+
+        <!-- Чеклист -->
+        <div class="checklist">
+            <h3>✅ Контрольный список</h3>
+            <ul>
+                <li><input type="checkbox"> Умею объявлять типы для переменных</li>
+                <li><input type="checkbox"> Понимаю разницу между interface и type</li>
+                <li><input type="checkbox"> Могу описать сложные структуры данных</li>
+                <li><input type="checkbox"> Знаю про Generics (Array&lt;T&gt;)</li>
+            </ul>
+        </div>
+
+        <!-- Профессиональные советы -->
+        <div class="pro-tips">
+            <h3>💡 Советы из практики</h3>
+            <div class="tip">
+                <div class="icon">🚀</div>
+                <p>Всегда включайте в tsconfig.json:</p>
+                <pre><code>{
+  "compilerOptions": {
+    "strict": true,
+    "noImplicitAny": true
+  }
+}</code></pre>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    // Демо-код для проверки заказа
+    document.getElementById('validateOrder').addEventListener('click', () => {
+        const statusElement = document.getElementById('orderStatus');
+
+        // Симуляция TypeScript проверки
+        try {
+            const fakeOrder = {
+                id: "123", // Намеренная ошибка типа
+                items: [{ productId: 1, quantity: 2 }],
+                status: 'pending'
+            };
+
+            // @ts-ignore - имитация проверки TypeScript
+            if (typeof fakeOrder.id !== 'number') throw new Error('Неверный тип ID');
+
+            statusElement.textContent = "Заказ валиден!";
+            statusElement.style.color = "green";
+        } catch (error) {
+            statusElement.textContent = error.message;
+            statusElement.style.color = "red";
+        }
+    });
+
+    // Показать/скрыть решения
+    document.querySelectorAll('.show-solution').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const solution = btn.nextElementSibling;
+            solution.style.display = solution.style.display === 'none' ? 'block' : 'none';
+        });
+    });
+</script>
+</body>
+</html>

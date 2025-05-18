@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Этап 2: Базовый синтаксис</title>
+    <link rel="stylesheet" href="../styles/main.css">
+</head>
+<body>
+<div class="container">
+    <h1>Этап 2: Базовый синтаксис</h1>
+    <a href="../index.html">← Назад к списку тем</a>
+
+    <div class="content">
+        <div class="analogy">
+            <h3>📦 Переменные — это как ячейки склада</h3>
+            <p>Представьте, что вы работник маркетплейса:</p>
+            <ul>
+                <li><code>let</code> — ячейка, где можно менять товар (переопределять значение)</li>
+                <li><code>const</code> — запечатанная коробка (значение нельзя изменить)</li>
+            </ul>
+        </div>
+
+        <div class="code-example">
+            <h3>📝 Пример из админки товаров</h3>
+            <pre><code>// Данные товара
+const productId = 'P12345'; // Неизменяемый ID
+let productPrice = 2990;    // Цена может меняться
+const currency = '₽';       // Валюта фиксирована</code></pre>
+        </div>
+
+        <h3>🔢 Типы данных — как разные виды товаров</h3>
+        <div class="type-grid">
+            <div class="type-card">
+                <h4>Числа → Цена/количество</h4>
+                <pre><code>const price = 1500;
+const quantity = 10;
+const total = price * quantity; // 15000</code></pre>
+            </div>
+
+            <div class="type-card">
+                <h4>Строки → Названия/описания</h4>
+                <pre><code>const title = "Смартфон Xiaomi";
+const description = `Модель: ${title}`; // Шаблонные строки</code></pre>
+            </div>
+        </div>
+
+        <div class="dangerous-cases">
+            <h3>💣 Коварные случаи (как в реальных проектах)</h3>
+            <div class="case">
+                <h4>1. Сложение строк и чисел → баг в корзине</h4>
+                <pre><code>const price = "1500"; // Опасно! Это строка
+const quantity = 2;
+console.log(price * quantity); // 3000 (работает)
+console.log(price + quantity); // "15002" (баг!)</code></pre>
+                <p class="tip">Всегда проверяйте типы при работе с ценами!</p>
+            </div>
+
+            <div class="case">
+                <h4>2. Изменение const-объектов → неожиданности</h4>
+                <pre><code>const user = { name: "Анна", role: "admin" };
+user.role = "manager"; // Работает!
+// user = { ... } ← Ошибка (переопределение)</code></pre>
+                <p class="tip">const защищает от переприсвоения, но не от изменений внутри объекта</p>
+            </div>
+        </div>
+
+        <div class="mutability-section">
+            <h3>⚡ Изменяемые vs неизменяемые: где подвох?</h3>
+
+            <div class="memory-metaphor">
+                <h4>📌 Памятка:</h4>
+                <div class="metaphor-grid">
+                    <div class="metaphor-card immutable">
+                        <div class="icon">🧊</div>
+                        <h5>Неизменяемые (примитивы)</h5>
+                        <ul>
+                            <li>Числа: <code>5 → 5</code></li>
+                            <li>Строки: <code>"hello" → "hello"</code></li>
+                            <li>boolean: <code>true → true</code></li>
+                        </ul>
+                        <p>Как замороженные продукты — нельзя изменить, только заменить.</p>
+                    </div>
+
+                    <div class="metaphor-card mutable">
+                        <div class="icon">♨️</div>
+                        <h5>Изменяемые (объекты/массивы)</h5>
+                        <ul>
+                            <li>Массив: <code>[1,2] → [1,2,3]</code></li>
+                            <li>Объект: <code>{name: "A"} → {name: "B"}</code></li>
+                        </ul>
+                        <p>Как суп — можно добавлять ингредиенты, даже если кастрюля (const) не меняется.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="admin-examples">
+                <h4>💼 Примеры из админки маркетплейса</h4>
+
+                <div class="case">
+                    <h5>1. Обновление списка заказов</h5>
+                    <pre><code>const orders = ["Order#123", "Order#456"];
+// Добавляем новый заказ (массив изменяется!)
+orders.push("Order#789");
+
+// ⚠️ Но так нельзя:
+orders = ["new"]; // Ошибка (переопределение const)</code></pre>
+                </div>
+
+                <div class="case">
+                    <h5>2. Сравнение фильтров товаров</h5>
+                    <pre><code>const filters = { price: 1000 };
+const newFilters = filters;
+newFilters.price = 2000;
+
+console.log(filters.price); // 2000 😱
+// Оба объекта ссылаются на одни данные!</code></pre>
+                </div>
+            </div>
+
+            <div class="dangerous-tasks">
+                <h4>🔍 Практика: Найдите ошибки</h4>
+
+                <div class="task">
+                    <h5>Задача 1: Суммирование оценок</h5>
+                    <pre><code>const ratings = [4, 5, 3];
+let total = 0;
+
+ratings = [4,5,3,4]; // Добавили новый отзыв
+total = ratings.reduce((sum, num) => sum + num);
+// Почему будет ошибка? Как исправить?</code></pre>
+                    <button class="show-answer">Показать ответ</button>
+                    <p class="answer">Используйте методы, не переопределяя массив:
+                        <code>ratings.push(4);</code></p>
+                </div>
+
+                <div class="task">
+                    <h5>Задача 2: Клонирование настроек</h5>
+                    <pre><code>const defaultSettings = { theme: "light" };
+const userSettings = defaultSettings;
+userSettings.theme = "dark";
+
+console.log(defaultSettings.theme); // Что выведет?</code></pre>
+                    <button class="show-answer">Показать ответ</button>
+                    <p class="answer">"dark" 😱 Используйте spread-оператор:
+                        <code>const userSettings = { ...defaultSettings };</code></p>
+                </div>
+            </div>
+
+            <div class="checklist">
+                <h4>✅ Чеклист: Изменяемость</h4>
+                <ul>
+                    <li><input type="checkbox"> const массивы можно изменять (push/pop)</li>
+                    <li><input type="checkbox"> Объекты сравниваются по ссылке, а не значению</li>
+                    <li><input type="checkbox"> Для копирования используйте spread (...) или JSON.parse</li>
+                    <li><input type="checkbox"> Примитивы передаются как значения, объекты — как ссылки</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="checklist">
+            <h3>✅ Чеклист: Что запомнить</h3>
+            <ul>
+                <li><input type="checkbox"> Используем const по умолчанию</li>
+                <li><input type="checkbox"> let — только если значение будет меняться</li>
+                <li><input type="checkbox"> Числа и строки — разные типы (1500 ≠ "1500")</li>
+                <li><input type="checkbox"> Массивы/объекты в const можно изменять</li>
+            </ul>
+        </div>
+
+        <div class="tasks">
+            <h3>💼 Практические задания (как в работе)</h3>
+
+            <div class="task">
+                <h4>Задача 1: Расчет стоимости заказа</h4>
+                <p>Дано: <code>price = 2499</code>, <code>quantity = 3</code>, <code>delivery = 500</code></p>
+                <p>Напишите код, который вычислит итоговую сумму с доставкой.</p>
+                <button class="show-solution">Показать ответ</button>
+                <pre class="solution"><code>const total = (price * quantity) + delivery;
+console.log(total); // 2499*3 + 500 = 7997</code></pre>
+            </div>
+
+            <div class="task">
+                <h4>Задача 2: Форматирование цены</h4>
+                <p>Преобразуйте число <code>price = 1500</code> в строку формата "1 500 ₽"</p>
+                <button class="show-solution">Показать ответ</button>
+                <pre class="solution"><code>const formatted = `${price.toLocaleString()} ₽`;
+// Или: price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")</code></pre>
+            </div>
+
+            <div class="task">
+                <h4>Задача 3: Валидация промокода</h4>
+                <p>Проверьте, что <code>promoCode = "SALE2024"</code> начинается с "SALE" и имеет длину 8 символов.</p>
+                <button class="show-solution">Показать ответ</button>
+                <pre class="solution"><code>const isValid = promoCode.startsWith("SALE")
+  && promoCode.length === 8;</code></pre>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    // Скрипт для показа/скрытия решений
+    document.querySelectorAll('.show-solution').forEach(button => {
+        button.addEventListener('click', () => {
+            const solution = button.nextElementSibling;
+            solution.style.display = solution.style.display === 'none' ? 'block' : 'none';
+        });
+    });
+    document.querySelectorAll('.show-answer').forEach(button => {
+        button.addEventListener('click', () => {
+            const answer = button.nextElementSibling;
+            answer.style.display = answer.style.display === 'none' ? 'block' : 'none';
+        });
+    });
+</script>
+</body>
+</html>

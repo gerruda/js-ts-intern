@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Этап 9: Работа с API</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <style>
+        .api-analogy {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            text-align: center;
+        }
+        .api-step {
+            padding: 20px;
+            background: #f5f5f5;
+            border-radius: 10px;
+        }
+        .response-example {
+            background: #333;
+            color: #00ff00;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Этап 9: Работа с API</h1>
+    <a href="../index.html">← Назад к списку тем</a>
+
+    <div class="content">
+        <!-- Аналогия -->
+        <div class="analogy-section">
+            <h2>🍽️ API — как ресторанное меню</h2>
+            <div class="api-analogy">
+                <div class="api-step">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3079/3079155.png" alt="Меню" width="80">
+                    <h4>1. Выбор блюда (эндпоинт)</h4>
+                    <p>/api/products</p>
+                </div>
+                <div class="api-step">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3594/3594573.png" alt="Заказ" width="80">
+                    <h4>2. Делаем заказ (запрос)</h4>
+                    <p>GET /api/products</p>
+                </div>
+                <div class="api-step">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2738/2738730.png" alt="Блюдо" width="80">
+                    <h4>3. Получаем ответ</h4>
+                    <p>JSON с данными</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Пример запроса -->
+        <div class="code-section">
+            <h3>📡 Пример: Получение списка товаров</h3>
+            <pre><code>async function loadProducts() {
+  try {
+    const response = await fetch('https://api.example.com/products');
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const products = await response.json();
+    console.log('Получены товары:', products);
+  } catch (error) {
+    console.error('Ошибка загрузки:', error);
+  }
+}</code></pre>
+        </div>
+
+        <!-- Пример ответа -->
+        <div class="response-section">
+            <h3>📄 Пример ответа API</h3>
+            <div class="response-example">
+                [
+                {
+                "id": 1,
+                "title": "Смартфон",
+                "price": 29990,
+                "stock": 15
+                },
+                {
+                "id": 2,
+                "title": "Ноутбук",
+                "price": 89990,
+                "stock": 5
+                }
+                ]
+            </div>
+        </div>
+
+        <!-- Добавить после раздела "Пример ответа API" -->
+
+        <div class="rest-methods">
+            <h3>📦 REST-методы: CRUD для данных</h3>
+            <div class="method-grid">
+                <div class="method-card">
+                    <h4>GET</h4>
+                    <p>Получить данные</p>
+                    <pre><code>// Получить товар с ID 123
+fetch('/api/products/123')</code></pre>
+                </div>
+
+                <div class="method-card">
+                    <h4>POST</h4>
+                    <p>Создать новый объект</p>
+                    <pre><code>// Добавить новый товар
+fetch('/api/products', {
+  method: 'POST',
+  body: JSON.stringify(newProduct)
+})</code></pre>
+                </div>
+
+                <div class="method-card">
+                    <h4>PUT/PATCH</h4>
+                    <p>Обновить данные</p>
+                    <pre><code>// Изменить цену товара
+fetch('/api/products/123', {
+  method: 'PATCH',
+  body: JSON.stringify({ price: 999 })
+})</code></pre>
+                </div>
+
+                <div class="method-card">
+                    <h4>DELETE</h4>
+                    <p>Удалить данные</p>
+                    <pre><code>// Удалить товар
+fetch('/api/products/123', {
+  method: 'DELETE'
+})</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <div class="request-response">
+            <h3>🔍 Из чего состоит запрос и ответ</h3>
+
+            <div class="http-parts">
+                <div class="part">
+                    <h4>Запрос:</h4>
+                    <pre><code>GET /api/products HTTP/1.1
+Host: example.com
+Authorization: Bearer token123
+Content-Type: application/json</code></pre>
+                </div>
+
+                <div class="part">
+                    <h4>Ответ:</h4>
+                    <pre><code>HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "data": [...]
+}</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <div class="alternative-apis">
+            <h3>🚀 Альтернативные подходы</h3>
+
+            <div class="websocket-section">
+                <h4>WebSocket: Чат с сервером</h4>
+                <div class="analogy">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3094/3094954.png" width="60">
+                    <p>Как телефонный звонок вместо писем. Подходит для:</p>
+                    <ul>
+                        <li>Онлайн-чаты поддержки</li>
+                        <li>Обновления цены в реальном времени</li>
+                        <li>Уведомления о статусе заказа</li>
+                    </ul>
+                </div>
+                <pre><code>const socket = new WebSocket('wss://example.com');
+socket.onmessage = (event) => {
+  console.log('Новое уведомление:', event.data);
+};</code></pre>
+            </div>
+
+            <div class="graphql-section">
+                <h4>GraphQL: Точечные запросы</h4>
+                <div class="analogy">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2151/2151430.png" width="60">
+                    <p>Как заказ бургера по ингредиентам. Пример:</p>
+                    <pre><code>query {
+  product(id: 123) {
+    name
+    price
+    reviews(limit: 3) {
+      text
+      rating
+    }
+  }
+}</code></pre>
+                </div>
+                <p>Преимущества: получаем только нужные данные за 1 запрос</p>
+            </div>
+        </div>
+
+        <!-- Практические задания -->
+        <div class="tasks">
+            <h2>🔧 Практические задания</h2>
+
+            <div class="task">
+                <h4>Задача 1: Получить данные о погоде</h4>
+                <p>Используйте OpenWeatherMap API:</p>
+                <pre><code>fetch('https://api.openweathermap.org/data/2.5/weather?q=Moscow&appid=ВАШ_КЛЮЧ')
+  .then(response => response.json())
+  .then(data => console.log(data));</code></pre>
+                <p>Зарегистрируйтесь на сайте и получите API-ключ</p>
+            </div>
+
+            <div class="task">
+                <h4>Задача 2: Поиск товаров</h4>
+                <p>Создайте функцию поиска через API:</p>
+                <pre><code>async function searchProducts(query) {
+  const response = await fetch(`https://api.example.com/search?q=${query}`);
+  return await response.json();
+}</code></pre>
+            </div>
+        </div>
+        <div class="tasks">
+            <h2>🔧 Новые практические задания</h2>
+
+            <div class="task">
+                <h4>Задача 3: Отправить отзыв о товаре</h4>
+                <p>Используйте POST-запрос:</p>
+                <pre><code>async function sendReview(productId, text) {
+  const response = await fetch(`/api/products/${productId}/reviews`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ text })
+  });
+  return response.json();
+}</code></pre>
+            </div>
+
+            <div class="task">
+                <h4>Задача 4: Реализовать онлайн-чат</h4>
+                <p>Используйте WebSocket для получения сообщений:</p>
+                <pre><code>const chatSocket = new WebSocket('wss://example.com/chat');
+chatSocket.onmessage = (e) => {
+  const message = JSON.parse(e.data);
+  addMessageToChat(message);
+};</code></pre>
+            </div>
+        </div>
+
+        <!-- Чеклист -->
+        <div class="checklist">
+            <h3>✅ Контрольный список</h3>
+            <ul>
+                <li><input type="checkbox"> Знаю основные HTTP-методы</li>
+                <li><input type="checkbox"> Могу прочитать заголовки запроса</li>
+                <li><input type="checkbox"> Понимаю разницу между REST и GraphQL</li>
+                <li><input type="checkbox"> Знаю, когда использовать WebSocket</li>
+            </ul>
+        </div>
+
+        <!-- Профессиональные советы -->
+        <div class="pro-tips">
+            <h3>💡 Советы из реальной практики</h3>
+            <div class="tip">
+                <div class="icon">🔒</div>
+                <p>Никогда не храните API-ключи в клиентском коде! Используйте:</p>
+                <ul>
+                    <li>Сервер-прокси</li>
+                    <li>Переменные окружения</li>
+                    <li>Специальные хранилища ключей</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

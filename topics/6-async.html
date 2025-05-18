@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Этап 6: Асинхронность</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <style>
+        .order-status {
+            padding: 20px;
+            margin: 20px 0;
+            border: 2px dashed #ccc;
+        }
+        .loading::after {
+            content: ' ░░░';
+            animation: loading 1s infinite;
+        }
+        @keyframes loading {
+            0% { content: ' ░░░'; }
+            33% { content: ' █░░'; }
+            66% { content: ' ██░'; }
+            100% { content: ' ███'; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Этап 6: Асинхронность</h1>
+    <a href="../index.html">← Назад к списку тем</a>
+
+    <div class="content">
+        <!-- Аналогия -->
+        <div class="analogy-section">
+            <h2>🍔 Асинхронность — как заказ еды с доставкой</h2>
+            <div class="delivery-flow">
+                <div class="step">
+                    <img src="https://cdn-icons-png.flaticon.com/512/857/857681.png" alt="Заказ" width="80">
+                    <p>1. Делаем заказ (запускаем операцию)</p>
+                </div>
+                <div class="step">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1830/1830839.png" alt="Ожидание" width="80">
+                    <p>2. Занимаемся другими делами (код продолжает работу)</p>
+                </div>
+                <div class="step">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1046/1046784.png" alt="Доставка" width="80">
+                    <p>3. Получаем уведомление (resolve/reject)</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Promise -->
+        <div class="promise-section">
+            <h3>📦 Promise — квитанция о заказе</h3>
+            <pre><code>function checkOrderStatus(orderId) {
+  return new Promise((resolve, reject) => {
+    // Симуляция запроса к серверу
+    setTimeout(() => {
+      Math.random() > 0.1
+        ? resolve('Доставлен')
+        : reject('Ошибка доставки');
+    }, 2000);
+  });
+}</code></pre>
+        </div>
+
+        <!-- Async/await -->
+        <div class="async-section">
+            <h3>⏳ Async/await — электронное отслеживание</h3>
+            <pre><code>async function trackOrder() {
+  try {
+    const status = await checkOrderStatus('123');
+    updateUI(status);
+  } catch (error) {
+    showError(error);
+  }
+}</code></pre>
+        </div>
+
+        <!-- Сравнение -->
+        <div class="comparison">
+            <h3>⚖️ Promise.then vs Async/await</h3>
+            <div class="methods">
+                <div class="method">
+                    <h4>Цепочка промисов</h4>
+                    <pre><code>getUser()
+  .then(user => getOrders(user.id))
+  .then(orders => render(orders))
+  .catch(handleError);</code></pre>
+                </div>
+                <div class="method">
+                    <h4>Синхронный стиль</h4>
+                    <pre><code>try {
+  const user = await getUser();
+  const orders = await getOrders(user.id);
+  render(orders);
+} catch (err) {
+  handleError(err);
+}</code></pre>
+                </div>
+            </div>
+            <p>✅ Сегодня чаще используют async/await за читаемость</p>
+        </div>
+
+        <!-- Практика -->
+        <div class="practice">
+            <h2>📦 Реальный пример: Загрузка товаров</h2>
+            <div class="live-example">
+                <button id="loadProducts">Загрузить товары</button>
+                <div id="productList" class="order-status">Статус: Не загружено</div>
+            </div>
+
+            <pre><code>async function loadProducts() {
+  try {
+    const response = await fetch('/api/products');
+    const products = await response.json();
+    renderProducts(products);
+  } catch (error) {
+    console.error('Ошибка загрузки:', error);
+  }
+}</code></pre>
+        </div>
+        <!-- Добавить в раздел content перед чеклистом -->
+
+        <div class="tasks">
+            <h2>🔧 Практические задания</h2>
+
+            <div class="task">
+                <h4>Задача 1: Загрузка данных о товаре</h4>
+                <p>1. Создайте функцию <code>loadProduct</code>, которая возвращает промис с данными товара через 1 сек.</p>
+                <p>2. При успешной загрузке выведите в консоль "Товар загружен"</p>
+                <button class="show-solution">Решение</button>
+                <pre class="solution"><code>async function loadProduct() {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve({ id: 1, name: 'Phone', price: 999 });
+    }, 1000);
+  });
+}
+
+// Использование
+loadProduct().then(product => console.log('Товар загружен:', product));</code></pre>
+            </div>
+
+            <div class="task">
+                <h4>Задача 2: Обработка ошибок при заказе</h4>
+                <p>Модифицируйте функцию заказа, чтобы при ошибке показывать alert</p>
+                <pre class="problem-code"><code>async function createOrder() {
+  const response = await fetch('/api/orders');
+  return response.json();
+}</code></pre>
+                <button class="show-solution">Решение</button>
+                <pre class="solution"><code>async function createOrder() {
+  try {
+    const response = await fetch('/api/orders');
+    if (!response.ok) throw new Error('Ошибка HTTP: ' + response.status);
+    return await response.json();
+  } catch (error) {
+    alert('Ошибка заказа: ' + error.message);
+    throw error;
+  }
+}</code></pre>
+            </div>
+
+            <div class="task">
+                <h4>Задача 3: Параллельная загрузка данных</h4>
+                <p>Загрузите одновременно:</p>
+                <ul>
+                    <li>Список товаров</li>
+                    <li>Профиль пользователя</li>
+                    <li>Настройки магазина</li>
+                </ul>
+                <button class="show-solution">Решение</button>
+                <pre class="solution"><code>async function loadAllData() {
+  const [products, user, settings] = await Promise.all([
+    fetch('/api/products'),
+    fetch('/api/user'),
+    fetch('/api/settings')
+  ]);
+
+  return {
+    products: await products.json(),
+    user: await user.json(),
+    settings: await settings.json()
+  };
+}</code></pre>
+            </div>
+
+            <div class="task">
+                <h4>Задача 4: Таймаут запроса</h4>
+                <p>Сделайте запрос к API, который отменяется через 5 секунд</p>
+                <button class="show-solution">Решение</button>
+                <pre class="solution"><code>async function fetchWithTimeout(url, timeout = 5000) {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), timeout);
+
+  try {
+    const response = await fetch(url, { signal: controller.signal });
+    clearTimeout(timeoutId);
+    return response.json();
+  } catch (error) {
+    if (error.name === 'AbortError') {
+      throw new Error('Превышено время ожидания');
+    }
+    throw error;
+  }
+}</code></pre>
+            </div>
+
+            <div class="task">
+                <h4>Задача 5: Повторная попытка запроса</h4>
+                <p>Реализуйте функцию с 3 попытками запроса</p>
+                <button class="show-solution">Решение</button>
+                <pre class="solution"><code>async function fetchWithRetry(url, retries = 3) {
+  for (let i = 0; i < retries; i++) {
+    try {
+      const response = await fetch(url);
+      return await response.json();
+    } catch (error) {
+      if (i === retries - 1) throw error;
+      await new Promise(resolve => setTimeout(resolve, 1000));
+    }
+  }
+}</code></pre>
+            </div>
+        </div>
+
+        <!-- Чеклист -->
+        <div class="checklist">
+            <h3>✅ Контрольный список</h3>
+            <ul>
+                <li><input type="checkbox"> Понимаю event loop</li>
+                <li><input type="checkbox"> Могу преобразовать Promise в async/await</li>
+                <li><input type="checkbox"> Знаю про Promise.all для параллельных запросов</li>
+                <li><input type="checkbox"> Всегда обрабатываю ошибки try/catch</li>
+            </ul>
+        </div>
+
+        <!-- Профессиональные советы -->
+        <div class="pro-tips">
+            <h3>💡 Советы из практики</h3>
+            <div class="tip">
+                <div class="icon">🚀</div>
+                <p>Используйте Promise.all для параллельных запросов:</p>
+                <pre><code>const [user, products] = await Promise.all([
+  fetchUser(),
+  fetchProducts()
+]);</code></pre>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    // Демо-код для примера
+    const statusElement = document.getElementById('productList');
+
+    document.getElementById('loadProducts').addEventListener('click', async () => {
+        statusElement.className = 'order-status loading';
+        statusElement.textContent = 'Статус: Загрузка';
+
+        try {
+            // Симуляция запроса к API
+            await new Promise(resolve => setTimeout(resolve, 1500));
+            statusElement.className = 'order-status';
+            statusElement.textContent = 'Статус: Успешно загружено 15 товаров';
+        } catch (error) {
+            statusElement.className = 'order-status';
+            statusElement.textContent = 'Статус: Ошибка загрузки';
+        }
+    });
+</script>
+</body>
+</html>

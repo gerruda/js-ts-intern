@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Этап 5: Работа с DOM</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <style>
+        .product-card {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 10px;
+            max-width: 300px;
+        }
+        .dark-theme {
+            background: #333;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Этап 5: Работа с DOM</h1>
+    <a href="../index.html">← Назад к списку тем</a>
+
+    <div class="content">
+        <!-- Теория -->
+        <div class="dom-concept">
+            <h2>🌳 DOM — скелет вашей страницы</h2>
+            <div class="analogy">
+                <img src="https://cdn-icons-png.flaticon.com/512/993/993791.png" alt="Дерево DOM" width="120">
+                <div class="explanation">
+                    <p>Представьте HTML-документ как дерево:</p>
+                    <ul>
+                        <li>Корень — <code>document</code></li>
+                        <li>Ветви — теги (<code>&lt;div&gt;</code>, <code>&lt;ul&gt;</code>)</li>
+                        <li>Листья — текст/элементы</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Поиск элементов -->
+        <div class="search-section">
+            <h3>🔍 Поиск элементов (как в админке товаров)</h3>
+
+            <div class="search-methods">
+                <div class="method-card">
+                    <h4>Вниз по дереву</h4>
+                    <pre><code>// Найти все кнопки "Удалить"
+document.querySelectorAll('.delete-btn');
+
+// Найти товары в категории
+document.getElementById('category-5')
+       .getElementsByClassName('product-card');</code></pre>
+                </div>
+
+                <div class="method-card">
+                    <h4>Вверх по дереву</h4>
+                    <pre><code>// При клике на кнопку найти родительскую карточку
+button.addEventListener('click', (e) => {
+  const card = e.target.closest('.product-card');
+});</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Пример изменения стилей -->
+        <div class="style-example">
+            <h3>🎨 Изменение стилей (реальный кейс)</h3>
+            <div class="live-example">
+                <button id="themeToggle" class="demo-btn">Переключить тему</button>
+                <pre><code>// JavaScript
+themeToggle.addEventListener('click', () => {
+  document.body.classList.toggle('dark-theme');
+});</code></pre>
+            </div>
+        </div>
+
+        <!-- Работа с элементами -->
+        <div class="element-manipulation">
+            <h3>🛠️ Изменение контента (как в карточке товара)</h3>
+            <div class="product-card" id="product-123">
+                <h4 class="product-title">Смартфон Xiaomi</h4>
+                <p class="price">Цена: <span>15 000 ₽</span></p>
+                <button class="edit-price">Изменить цену</button>
+            </div>
+
+            <pre><code>// Обновление цены
+const priceSpan = document.querySelector('#product-123 .price span');
+priceSpan.textContent = '14 500 ₽';
+
+// Добавление класса акции
+document.getElementById('product-123')
+  .classList.add('sale');</code></pre>
+        </div>
+
+        <!-- Практические задания -->
+        <div class="tasks">
+            <h2>💼 Практические задания</h2>
+
+            <div class="task">
+                <h4>Задача 1: Динамическое обновление остатков</h4>
+                <p>Дан элемент: <code>&lt;div id="stock"&gt;Осталось: 5 шт.&lt;/div&gt;</code></p>
+                <p>Напишите код, который уменьшает остаток на 1 при клике на кнопку "Купить".</p>
+                <button class="show-solution">Решение</button>
+                <pre class="solution"><code>const stockElement = document.getElementById('stock');
+let stock = 5;
+
+document.querySelector('.buy-btn').addEventListener('click', () => {
+  stock--;
+  stockElement.textContent = `Осталось: ${stock} шт.`;
+});</code></pre>
+            </div>
+
+            <div class="task">
+                <h4>Задача 2: Поиск в DOM-дереве</h4>
+                <p>При клике на кнопку "Удалить" в карточке товара найдите и скройте всю карточку.</p>
+                <button class="show-solution">Решение</button>
+                <pre class="solution"><code>document.querySelectorAll('.delete-btn').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    const card = e.target.closest('.product-card');
+    card.style.display = 'none';
+  });
+});</code></pre>
+            </div>
+        </div>
+
+        <!-- Чеклист -->
+        <div class="checklist">
+            <h2>✅ Контрольный список</h2>
+            <ul>
+                <li><input type="checkbox"> Умею находить элементы по ID/классам</li>
+                <li><input type="checkbox"> Понимаю разницу между querySelector и getElementById</li>
+                <li><input type="checkbox"> Могу перемещаться по DOM (parent/child/sibling)</li>
+                <li><input type="checkbox"> Умею добавлять/удалять классы</li>
+            </ul>
+        </div>
+
+        <!-- Профессиональные советы -->
+        <div class="pro-tips">
+            <h3>💡 Советы из реальной практики</h3>
+            <div class="tip">
+                <div class="icon">🚩</div>
+                <p>Всегда проверяйте существование элемента перед работой с ним:</p>
+                <pre><code>const element = document.getElementById('someId');
+if (element) {
+  // безопасная работа с элементом
+}</code></pre>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    // Скрипт для примера с темой
+    document.getElementById('themeToggle').addEventListener('click', () => {
+        document.body.classList.toggle('dark-theme');
+    });
+
+    // Скрипт для показа решений
+    document.querySelectorAll('.show-solution').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const solution = btn.nextElementSibling;
+            solution.style.display = solution.style.display === 'none' ? 'block' : 'none';
+        });
+    });
+</script>
+</body>
+</html>

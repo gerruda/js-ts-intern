@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Этап 4: Функции и область видимости</title>
+    <link rel="stylesheet" href="../styles/main.css">
+</head>
+<body>
+<div class="container">
+    <h1>Этап 4: Функции и область видимости</h1>
+    <a href="../index.html">← Назад к списку тем</a>
+
+    <div class="content">
+        <!-- Базовые концепции -->
+        <div class="section toolkit">
+            <h2>🛠️ Функции — ваш набор инструментов</h2>
+            <div class="analogy">
+                <img src="https://cdn-icons-png.flaticon.com/512/1995/1995542.png" alt="Инструменты" width="120">
+                <div class="explanation">
+                    <p>Функция как многоразовый инструмент:</p>
+                    <ul>
+                        <li><strong>Аргументы</strong> — настройки инструмента</li>
+                        <li><strong>Возвращаемое значение</strong> — результат работы</li>
+                        <li><strong>Scope</strong> — зона действия инструмента</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Аргументы -->
+        <div class="section">
+            <h2>🎛️ Вариации аргументов</h2>
+
+            <div class="argument-types">
+                <div class="argument-card">
+                    <h4>1. Обязательные</h4>
+                    <pre><code>function calcTotal(price, quantity) {
+  return price * quantity;
+}</code></pre>
+                    <p>Без price и quantity — ошибка!</p>
+                </div>
+
+                <div class="argument-card">
+                    <h4>2. С значениями по умолчанию</h4>
+                    <pre><code>function greet(name = 'Гость') {
+  return `Привет, ${name}!`;
+}</code></pre>
+                </div>
+
+                <div class="argument-card">
+                    <h4>3. Именованные параметры</h4>
+                    <pre><code>function createProduct({ name, price, category }) {
+  // ...
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="real-case">
+                <h3>📦 Пример из корзины покупок</h3>
+                <pre><code>function applyDiscount(price, discount = 10) {
+  return price * (1 - discount/100);
+}</code></pre>
+            </div>
+        </div>
+
+        <!-- Scope -->
+        <div class="section scope-visual">
+            <h2>🔍 Область видимости: Видимость переменных</h2>
+
+            <div class="scope-levels">
+                <div class="scope-card">
+                    <h4>Глобальная</h4>
+                    <pre><code>const SITE_NAME = 'Маркетплейс';
+
+function showTitle() {
+  console.log(SITE_NAME); // Видна
+}</code></pre>
+                </div>
+
+                <div class="scope-card">
+                    <h4>Локальная</h4>
+                    <pre><code>function processOrder() {
+  const secret = 'key123'; // Только внутри функции
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="danger">
+                <h3>💥 Опасный пример:</h3>
+                <pre><code>function updatePrice() {
+  price = 2000; // Не объявлена через let/const!
+}
+// Создаст глобальную переменную!</code></pre>
+            </div>
+        </div>
+
+        <!-- Практика -->
+        <div class="tasks">
+            <h2>💼 Практические задания</h2>
+
+            <div class="task">
+                <h4>Задача 1: Форматирование цены</h4>
+                <p>Создайте функцию <code>formatPrice(price, currency = '₽')</code>, которая возвращает строку вида "1 500 ₽"</p>
+                <button class="show-solution">Решение</button>
+                <pre class="solution"><code>function formatPrice(price, currency = '₽') {
+  return `${price.toLocaleString()} ${currency}`;
+}</code></pre>
+            </div>
+
+            <div class="task">
+                <h4>Задача 2: Валидация заказа</h4>
+                <p>Напишите функцию <code>validateOrder({ items, address })</code>, где:
+                    <br>- items — массив (обязателен)
+                    <br>- address — строка (не обязателен, по умолчанию 'Самовывоз')</p>
+                <button class="show-solution">Решение</button>
+                <pre class="solution"><code>function validateOrder({ items, address = 'Самовывоз' }) {
+  if (!items?.length) throw new Error('Нет товаров');
+  // ...
+}</code></pre>
+            </div>
+        </div>
+
+        <!-- Чеклист -->
+        <div class="checklist">
+            <h2>✅ Контрольный список</h2>
+            <ul>
+                <li><input type="checkbox"> Понимаю разницу между параметрами и аргументами</li>
+                <li><input type="checkbox"> Использую деструктуризацию для сложных параметров</li>
+                <li><input type="checkbox"> Избегаю глобальных переменных</li>
+                <li><input type="checkbox"> Знаю про TDZ (Temporal Dead Zone)</li>
+            </ul>
+        </div>
+
+        <!-- Советы -->
+        <div class="pro-tips">
+            <h3>💡 Профессиональные советы</h3>
+            <div class="tip-card">
+                <div class="icon">🚩</div>
+                <p>Всегда используйте <code>const</code> для объявления функций-стрелок</p>
+                <pre><code>const sendOrder = () => { ... };</code></pre>
+            </div>
+        </div>
+
+        <div class="code-execution">
+            <h2>🚀 Как запускать код?</h2>
+
+            <div class="methods">
+                <div class="method-card">
+                    <h4>1. Консоль браузера</h4>
+                    <img src="https://cdn-icons-png.flaticon.com/512/1383/1383268.png" alt="Консоль" width="60">
+                    <p>Нажми <kbd>F12</kbd> → вкладка "Console" → пиши код прямо там</p>
+                    <pre><code>// Пример:
+function test() { return "Работает!"; }
+test(); // Выведет "Работает!"</code></pre>
+                </div>
+
+                <div class="method-card">
+                    <h4>2. HTML-файл</h4>
+                    <img src="https://cdn-icons-png.flaticon.com/512/136/136528.png" alt="HTML" width="60">
+                    <p>Добавь тег <code>&lt;script&gt;</code> в конец body:</p>
+                    <pre><code>&lt;script&gt;
+  formatPrice(1500); // Вызов функции из примера выше
+&lt;/script&gt;</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <div class="global-vars">
+            <h2>🌐 Глобальные переменные в браузере</h2>
+
+            <div class="analogy">
+                <p>Представьте, что браузер — это офис, а глобальные переменные — общие документы на столе, которые видны всем.</p>
+            </div>
+
+            <div class="browser-globals">
+                <h3>Встроенные "документы" (объекты):</h3>
+                <div class="global-grid">
+                    <div class="global-item">
+                        <h4>window</h4>
+                        <pre><code>window.innerWidth // Ширина окна
+window.alert("Привет!") // Попап</code></pre>
+                    </div>
+
+                    <div class="global-item">
+                        <h4>document</h4>
+                        <pre><code>document.title = "Название"
+document.getElementById("header")</code></pre>
+                    </div>
+
+                    <div class="global-item">
+                        <h4>console</h4>
+                        <pre><code>console.log("Для отладки")
+console.error("Ошибка!")</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="danger">
+                <h3>⚠️ Опасность глобальных переменных</h3>
+                <pre><code>// Не делайте так!
+price = 1000; // Создаст window.price
+
+function update() {
+  total = price * 2; // Неявная глобальная
+}</code></pre>
+                <p>Могут возникать конфликты: если другая библиотека тоже использует <code>price</code></p>
+            </div>
+
+            <div class="practice">
+                <h3>🔍 Практика: Использование глобальных объектов</h3>
+                <div class="task">
+                    <h4>Задача: Изменить заголовок страницы</h4>
+                    <p>В консоли браузера выполните:</p>
+                    <pre><code>document.title = "Мой маркетплейс";</code></pre>
+                    <button class="show-hint">Подсказка</button>
+                    <p class="hint">Посмотрите на вкладку браузера — она изменится!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    // Скрипт для показа решений
+    document.querySelectorAll('.show-solution').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const solution = btn.nextElementSibling;
+            solution.style.display = solution.style.display === 'none' ? 'block' : 'none';
+        });
+    });
+    document.querySelectorAll('.show-hint').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const hint = btn.nextElementSibling;
+            hint.style.display = hint.style.display === 'none' ? 'block' : 'none';
+        });
+    });
+</script>
+</body>
+</html>

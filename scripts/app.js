@@ -14,8 +14,8 @@ const topics = [
     { id: 11, title: "Этап 11: Состояния", file: "11-state.html" },
     { id: 12, title: "Этап 12: Сборка проекта", file: "12-build.html" },
     { id: 13, title: "Этап 13: Тестирование (Jest)", file: "13-testing.html" },
-
-    // Добавляйте новые этапы по аналогии
+    { id: 14, title: "Этап 14: Деплой проекта", file: "14-deploy.html" },
+    { id: 15, title: "Этап 15: Финал — Собственный проект", file: "15-final-project.html" }
 ];
 
 // Генерация списка на главной странице

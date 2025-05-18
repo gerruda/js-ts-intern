@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Этап 15: Финал — Собственный проект</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <style>
+        .project-steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 25px 0;
+        }
+        .step-card {
+            padding: 20px;
+            background: #f5f5f5;
+            border-radius: 12px;
+        }
+        .example-code {
+            background: #333;
+            color: #00ff00;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Этап 15: Финал — Собственный проект</h1>
+    <a href="../index.html">← Назад к списку тем</a>
+
+    <div class="content">
+        <!-- Введение -->
+        <div class="intro">
+            <h2>🚀 Собираем всё вместе!</h2>
+            <p>Ваша задача — создать полноценное веб-приложение, используя все изученные технологии.</p>
+        </div>
+
+        <!-- Идеи проектов -->
+        <div class="project-ideas">
+            <h3>💡 Примеры проектов</h3>
+            <div class="project-steps">
+                <div class="step-card">
+                    <h4>🛒 Мини-маркетплейс</h4>
+                    <ul>
+                        <li>Каталог товаров</li>
+                        <li>Корзина покупок</li>
+                        <li>Фильтры и поиск</li>
+                    </ul>
+                </div>
+
+                <div class="step-card">
+                    <h4>📊 Личный кабинет</h4>
+                    <ul>
+                        <li>Аутентификация</li>
+                        <li>История заказов</li>
+                        <li>Настройки профиля</li>
+                    </ul>
+                </div>
+
+                <div class="step-card">
+                    <h4>📝 Система задач</h4>
+                    <ul>
+                        <li>CRUD операции</li>
+                        <li>Теги и фильтры</li>
+                        <li>Статистика</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Пошаговый план -->
+        <div class="roadmap">
+            <h3>🗺️ Пошаговый план реализации</h3>
+            <ol>
+                <li>
+                    <h4>1. Инициализация проекта</h4>
+                    <div class="example-code">
+                        npx create-react-app my-shop --template typescript
+                    </div>
+                </li>
+
+                <li>
+                    <h4>2. Проектирование структуры</h4>
+                    <pre><code>src/
+  ├─ components/
+  ├─ pages/
+  ├─ store/
+  ├─ api/
+  └─ assets/</code></pre>
+                </li>
+
+                <li>
+                    <h4>3. Разработка основных компонентов</h4>
+                    <div class="example-code">
+                        // ProductCard.tsx
+                        interface Product {
+                        id: number;
+                        name: string;
+                        price: number;
+                        }
+                    </div>
+                </li>
+
+                <li>
+                    <h4>4. Интеграция с API</h4>
+                    <div class="example-code">
+                        async function loadProducts() {
+                        const response = await fetch('/api/products');
+                        return await response.json();
+                        }
+                    </div>
+                </li>
+
+                <li>
+                    <h4>5. Тестирование</h4>
+                    <div class="example-code">
+                        test('adds product to cart', () => {
+                        render(&lt;ProductCard product={testProduct} />);
+                        fireEvent.click(screen.getByText('В корзину'));
+                        expect(mockAddToCart).toHaveBeenCalled();
+                        });
+                    </div>
+                </li>
+
+                <li>
+                    <h4>6. Деплой</h4>
+                    <div class="example-code">
+                        npm run build
+                        vercel --prod
+                    </div>
+                </li>
+            </ol>
+        </div>
+
+        <!-- Советы -->
+        <div class="pro-tips">
+            <h3>💡 Советы для успешного проекта</h3>
+            <div class="tip">
+                <div class="icon">🚩</div>
+                <p>Лайфхаки:</p>
+                <ul>
+                    <li>Начинайте с минимальной рабочей версии (MVP)</li>
+                    <li>Используйте готовые UI-библиотеки (Material UI, Ant Design)</li>
+                    <li>Делайте коммиты после каждой завершенной задачи</li>
+                    <li>Документируйте сложные части кода</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Ресурсы -->
+        <div class="resources">
+            <h3>🔧 Полезные ресурсы</h3>
+            <ul>
+                <li><a href="https://mockapi.io/" target="_blank">MockAPI</a> — фейковое API для тестов</li>
+                <li><a href="https://undraw.co/illustrations" target="_blank">unDraw</a> — бесплатные иллюстрации</li>
+                <li><a href="https://coolors.co/" target="_blank">Coolors</a> — подбор цветовых схем</li>
+            </ul>
+        </div>
+
+        <!-- Чеклист -->
+        <div class="checklist">
+            <h3>✅ Контрольный список</h3>
+            <ul>
+                <li><input type="checkbox"> Проект запускается без ошибок</li>
+                <li><input type="checkbox"> Реализованы основные функции</li>
+                <li><input type="checkbox"> Нет критических багов</li>
+                <li><input type="checkbox"> Код покрыт тестами</li>
+                <li><input type="checkbox"> Проект задеплоен</li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>

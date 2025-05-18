@@ -9,7 +9,11 @@ const topics = [
     { id: 7, title: "Этап 7: Введение в TypeScript", file: "7-typescript.html" },
     { id: 8, title: "Этап 8: Классы и ООП", file: "8-oop.html" },
     { id: 9, title: "Этап 9: Работа с API", file: "9-api.html" },
-
+    { id: 10, title: "Этап 10: Фреймворки", file: "10-frameworks.html" },
+    { id: 11, title: "Этап 11: Состояния", file: "11-state.html" },
+    { id: 11, title: "Этап 11: Состояния", file: "11-state.html" },
+    { id: 12, title: "Этап 12: Сборка проекта", file: "12-build.html" },
+    { id: 13, title: "Этап 13: Тестирование (Jest)", file: "13-testing.html" },
 
     // Добавляйте новые этапы по аналогии
 ];

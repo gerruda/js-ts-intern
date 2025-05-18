@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Этап 11: Состояние (state)</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <style>
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 25px 0;
+        }
+        .todo-example {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 12px;
+        }
+        .code-tabs {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .code-tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .code-tab.active {
+            background: #2196f3;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Этап 11: Состояние (state)</h1>
+    <a href="../index.html">← Назад к списку тем</a>
+
+    <div class="content">
+        <!-- Аналогия -->
+        <div class="analogy">
+            <h2>📋 Состояние — память приложения</h2>
+            <p>Представьте список дел:</p>
+            <ul>
+                <li>Добавление задачи → обновление состояния</li>
+                <li>Удаление задачи → изменение состояния</li>
+                <li>Интерфейс всегда синхронизирован с состоянием</li>
+            </ul>
+        </div>
+
+        <!-- React vs Vue -->
+        <div class="comparison">
+            <!-- React -->
+            <div class="todo-example">
+                <h3>⚛️ React (useState)</h3>
+                <pre><code>function TodoList() {
+  const [todos, setTodos] = useState([]);
+  const [input, setInput] = useState('');
+
+  const addTodo = () => {
+    setTodos([...todos, input]);
+    setInput('');
+  };
+
+  const removeTodo = (index) => {
+    setTodos(todos.filter((_, i) => i !== index));
+  };
+
+  return (
+    &lt;div&gt;
+      &lt;input
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+      /&gt;
+      &lt;button onClick={addTodo}&gt;Добавить&lt;/button&gt;
+      {todos.map((todo, i) => (
+        &lt;div key={i}&gt;
+          {todo}
+          &lt;button onClick={() => removeTodo(i)}&gt;×&lt;/button&gt;
+        &lt;/div&gt;
+      ))}
+    &lt;/div&gt;
+  );
+}</code></pre>
+            </div>
+
+            <!-- Vue -->
+            <div class="todo-example">
+                <h3>🟢 Vue (data + methods)</h3>
+                <pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;input v-model="newTodo" /&gt;
+    &lt;button @click="addTodo"&gt;Добавить&lt;/button&gt;
+    &lt;div v-for="(todo, index) in todos" :key="index"&gt;
+      {{ todo }}
+      &lt;button @click="removeTodo(index)"&gt;×&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  data() {
+    return {
+      todos: [],
+      newTodo: ''
+    }
+  },
+  methods: {
+    addTodo() {
+      this.todos.push(this.newTodo);
+      this.newTodo = '';
+    },
+    removeTodo(index) {
+      this.todos.splice(index, 1);
+    }
+  }
+}
+&lt;/script&gt;</code></pre>
+            </div>
+        </div>
+
+        <!-- Redux vs Vuex -->
+        <div class="code-tabs">
+            <div class="code-tab active" onclick="showTab('redux')">Redux</div>
+            <div class="code-tab" onclick="showTab('vuex')">Vuex</div>
+        </div>
+
+        <div id="redux" class="tab-content">
+            <h3>Redux (глобальное состояние)</h3>
+            <pre><code>// store.js
+const initialState = { todos: [] };
+
+function todoReducer(state = initialState, action) {
+  switch(action.type) {
+    case 'ADD_TODO':
+      return { ...state, todos: [...state.todos, action.payload] };
+    case 'REMOVE_TODO':
+      return { ...state, todos: state.todos.filter((_, i) => i !== action.payload) };
+    default:
+      return state;
+  }
+}
+
+const store = createStore(todoReducer);
+
+// Компонент
+function TodoList() {
+  const todos = useSelector(state => state.todos);
+  const dispatch = useDispatch();
+
+  const addTodo = (text) => dispatch({ type: 'ADD_TODO', payload: text });
+  const removeTodo = (index) => dispatch({ type: 'REMOVE_TODO', payload: index });
+}</code></pre>
+        </div>
+
+        <div id="vuex" class="tab-content" style="display:none">
+            <h3>Vuex (глобальное состояние)</h3>
+            <pre><code>// store.js
+export default new Vuex.Store({
+  state: {
+    todos: []
+  },
+  mutations: {
+    ADD_TODO(state, todo) {
+      state.todos.push(todo);
+    },
+    REMOVE_TODO(state, index) {
+      state.todos.splice(index, 1);
+    }
+  },
+  actions: {
+    addTodo({ commit }, todo) {
+      commit('ADD_TODO', todo);
+    },
+    removeTodo({ commit }, index) {
+      commit('REMOVE_TODO', index);
+    }
+  }
+});
+
+// Компонент
+export default {
+  computed: {
+    todos() {
+      return this.$store.state.todos;
+    }
+  },
+  methods: {
+    addTodo() {
+      this.$store.dispatch('addTodo', this.newTodo);
+    }
+  }
+}</code></pre>
+        </div>
+
+        <!-- Чеклист -->
+        <div class="checklist">
+            <h3>✅ Контрольный список</h3>
+            <ul>
+                <li><input type="checkbox"> Умею работать с локальным состоянием</li>
+                <li><input type="checkbox"> Понимаю разницу между useState и Redux</li>
+                <li><input type="checkbox"> Могу синхронизировать состояние с UI</li>
+                <li><input type="checkbox"> Знаю, когда использовать глобальное состояние</li>
+            </ul>
+        </div>
+
+        <!-- Советы -->
+        <div class="pro-tips">
+            <h3>💡 Правила работы с состоянием</h3>
+            <div class="tip">
+                <div class="icon">🚩</div>
+                <p>Начинайте с локального состояния, переходите на глобальное только когда:</p>
+                <ul>
+                    <li>Данные нужны в нескольких компонентах</li>
+                    <li>Нужно сохранять состояние между страницами</li>
+                    <li>Сложная логика обновления данных</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showTab(tabName) {
+        document.querySelectorAll('.tab-content').forEach(el => {
+            el.style.display = 'none';
+        });
+        document.querySelectorAll('.code-tab').forEach(el => {
+            el.classList.remove('active');
+        });
+        document.getElementById(tabName).style.display = 'block';
+        event.target.classList.add('active');
+    }
+</script>
+</body>
+</html>

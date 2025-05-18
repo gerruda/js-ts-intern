@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Этап 12: Сборка проекта</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <style>
+        .build-process {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 25px 0;
+        }
+        .tool-card {
+            padding: 20px;
+            background: #f5f5f5;
+            border-radius: 12px;
+            text-align: center;
+        }
+        .config-example {
+            background: #333;
+            color: #00ff00;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Этап 12: Сборка проекта</h1>
+    <a href="../index.html">← Назад к списку тем</a>
+
+    <div class="content">
+        <!-- Аналогия -->
+        <div class="analogy">
+            <h2>🏗️ Сборка — фабрика для кода</h2>
+            <p>Представьте:</p>
+            <ul>
+                <li>Исходный код — сырые материалы</li>
+                <li>Webpack — конвейерная лента</li>
+                <li>Браузер — магазин готовой продукции</li>
+            </ul>
+        </div>
+
+        <!-- Зачем нужна сборка -->
+        <div class="build-process">
+            <div class="tool-card">
+                <h3>1. Объединение файлов</h3>
+                <img src="https://cdn-icons-png.flaticon.com/512/992/992700.png" width="60">
+                <p>Из 100+ файлов → 1-2 бандла</p>
+            </div>
+
+            <div class="tool-card">
+                <h3>2. Совместимость</h3>
+                <img src="https://cdn-icons-png.flaticon.com/512/1067/1067555.png" width="60">
+                <p>ES6+ → ES5 для старых браузеров</p>
+            </div>
+
+            <div class="tool-card">
+                <h3>3. Оптимизация</h3>
+                <img src="https://cdn-icons-png.flaticon.com/512/993/993791.png" width="60">
+                <p>Сжатие кода, tree shaking</p>
+            </div>
+        </div>
+
+        <!-- Webpack -->
+        <div class="webpack-section">
+            <h3>📦 Webpack — главный упаковщик</h3>
+            <pre class="config-example">
+// webpack.config.js
+module.exports = {
+  entry: './src/index.js',
+  output: {
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'dist')
+  },
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: ['babel-loader']
+      }
+    ]
+  }
+};</pre>
+        </div>
+
+        <!-- Babel -->
+        <div class="babel-section">
+            <h3>🔄 Babel — переводчик для JS</h3>
+            <pre class="config-example">
+// .babelrc
+{
+  "presets": [
+    ["@babel/preset-env", {
+      "targets": "> 0.25%, not dead"
+    }]
+  ]
+}</pre>
+        </div>
+
+        <!-- Интеграция в меню -->
+        <div class="integration">
+            <h3>🔗 Как добавить в ваш проект?</h3>
+            <ol>
+                <li>Установить зависимости:
+                    <pre>npm install webpack webpack-cli babel-loader @babel/core @babel/preset-env --save-dev</pre>
+                </li>
+                <li>Создать конфигурационные файлы (как выше)</li>
+                <li>Добавить скрипты в package.json:
+                    <pre class="config-example">
+"scripts": {
+  "build": "webpack --mode production",
+  "dev": "webpack serve --mode development"
+}</pre>
+                </li>
+            </ol>
+        </div>
+
+        <!-- Чеклист -->
+        <div class="checklist">
+            <h3>✅ Контрольный список</h3>
+            <ul>
+                <li><input type="checkbox"> Понимаю роль Webpack и Babel</li>
+                <li><input type="checkbox"> Могу настроить базовую сборку</li>
+                <li><input type="checkbox"> Знаю, как добавить поддержку старых браузеров</li>
+                <li><input type="checkbox"> Умею запускать production-сборку</li>
+            </ul>
+        </div>
+
+        <!-- Советы -->
+        <div class="pro-tips">
+            <h3>💡 Советы для начинающих</h3>
+            <div class="tip">
+                <div class="icon">🚀</div>
+                <p>Используйте готовые шаблоны:</p>
+                <pre>npx create-react-app my-app</pre>
+                <p>или</p>
+                <pre>npm init vite@latest</pre>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
